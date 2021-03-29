@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 import { connect } from 'react-redux';
 import Container from '../components/Container';
-// import appearFormStyles from './transitionsStyles/appearFormStyles.module.css';
+import Alert from '../components/Alert';
 import fadeStyles from '../transitionsStyles/fade.module.css';
 import searchFadeStyles from '../transitionsStyles/searchFadeStyles.module.css';
-import s from './HomeView.module.css';
+import s from './ContactsView.module.css';
 import Title from '../components/Title';
 import ContactForm from '../components/ContactForm';
 import Filter from '../components/Filter';
@@ -22,14 +22,14 @@ class ContactsView extends Component {
   static propTypes = {
     contacts: PropTypes.arrayOf(
       PropTypes.shape({
-        id: PropTypes.number.isRequired,
+        id: PropTypes.string.isRequired,
         name: PropTypes.string,
         number: PropTypes.string,
       }),
     ),
     visibleContacts: PropTypes.arrayOf(
       PropTypes.shape({
-        id: PropTypes.number.isRequired,
+        id: PropTypes.string.isRequired,
         name: PropTypes.string,
         number: PropTypes.string,
       }),
@@ -37,7 +37,7 @@ class ContactsView extends Component {
     fetchContacts: PropTypes.func,
     clearFilter: PropTypes.func,
     isLoadingContacts: PropTypes.bool,
-    error: PropTypes.bool,
+    error: PropTypes.string,
   };
 
   componentDidMount() {
@@ -49,8 +49,9 @@ class ContactsView extends Component {
       <Container>
         <div className={s.wrapper}>
           {this.props.error ? (
-            <h1 style={{ color: 'red' }}>Error: {this.props.error.message}</h1>
-          ) : null}
+            <Alert />
+          ) : // <h1 style={{ color: 'red' }}>Error: {this.props.error}</h1>
+          null}
           <Title title="Phonebook" level={1} />
           {/* <CSSTransition in={true} appear={true} timeout={500} classNames={appearFormStyles} unmountOnExit> */}
           <ContactForm />

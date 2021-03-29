@@ -11,6 +11,7 @@ import {
   deleteContactSuccess,
   deleteContactError,
   changeFilter,
+  clearError,
 } from './contacts-actions';
 
 // console.log(actions.addContact.type);
@@ -41,12 +42,16 @@ const filter = createReducer('', {
   [changeFilter]: (_, { payload }) => payload,
 });
 
+const setError = (_, { payload }) => payload;
+
 const error = createReducer(null, {
-  [fetchContactsError]: (_, { payload }) => payload,
-  [addContactError]: (_, { payload }) => payload,
-  [deleteContactError]: (_, { payload }) => payload,
+  [fetchContactsError]: setError,
+  [addContactError]: setError,
+  [deleteContactError]: setError,
+  [clearError]: () => null,
 });
 
+/* eslint import/no-anonymous-default-export: [2, {"allowObject": true}] */
 export default combineReducers({
   items,
   filter,

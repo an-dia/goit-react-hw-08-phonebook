@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { CSSTransition } from 'react-transition-group';
 import { connect } from 'react-redux';
+import Button from '@material-ui/core/Button';
 import contactsOperations from '../../redux/contacts/contacts-operations';
 import PropTypes from 'prop-types';
 import s from './ContactForm.module.css';
 import shortid from 'shortid';
 import Alert from '../Alert';
-import alertStyle from '../../transitionsStyles/fadeAlertStyle.module.css';
 import contactsSelectors from '../../redux/contacts/contacts-selectors';
+import TextField from '@material-ui/core/TextField';
 
 class ContactForm extends Component {
   static propTypes = {
@@ -17,8 +17,7 @@ class ContactForm extends Component {
   state = {
     name: '',
     number: '',
-    error: false,
-    textAlert: '',
+    message: null,
   };
 
   inputNameId = shortid.generate();
@@ -49,8 +48,8 @@ class ContactForm extends Component {
 
   showAlert = text => {
     this.reset();
-    this.setState({ error: true, textAlert: text });
-    setTimeout(() => this.setState({ error: false }), 2000);
+    this.setState({ message: text });
+    setTimeout(() => this.setState({ message: null }), 2000);
   };
 
   reset = () => {
@@ -65,21 +64,14 @@ class ContactForm extends Component {
   };
 
   render() {
-    const { error, textAlert } = this.state;
+    const { message, name, number } = this.state;
 
     return (
       <>
-        <CSSTransition
-          in={error}
-          classNames={alertStyle}
-          timeout={250}
-          unmountOnExit
-        >
-          <Alert text={textAlert} />
-        </CSSTransition>
+        <Alert message={message} />
 
         <form className={s.form} onSubmit={this.handleSubmit}>
-          <label className={s.label} htmlFor={this.inputNameId}>
+          {/* <label className={s.label} htmlFor={this.inputNameId}>
             <span>Name</span>
           </label>
           <input
@@ -91,8 +83,21 @@ class ContactForm extends Component {
             placeholder="Enter your name"
             // required
             onChange={this.handlerChange}
+          /> */}
+
+          <TextField
+            className={s.label}
+            id="outlined-name"
+            label="Name"
+            type="name"
+            autoComplete="current-password"
+            variant="outlined"
+            value={name}
+            name="name"
+            onChange={this.handlerChange}
           />
-          <label className={s.label} htmlFor={this.inputNumberId}>
+
+          {/* <label className={s.label} htmlFor={this.inputNumberId}>
             <span>Number</span>
           </label>
           <input
@@ -103,8 +108,23 @@ class ContactForm extends Component {
             name="number"
             placeholder="Enter your number"
             onChange={this.handlerChange}
+          /> */}
+
+          <TextField
+            className={s.label}
+            id={this.inputNumberId}
+            label="Number"
+            type="number"
+            autoComplete="current-password"
+            variant="outlined"
+            value={number}
+            name="number"
+            onChange={this.handlerChange}
           />
-          <button className={s.button}>Add contact</button>
+          <Button variant="contained" color="primary" type="submit">
+            Add contact
+          </Button>
+          {/* <button className={s.button}>Add contact</button> */}
         </form>
       </>
     );

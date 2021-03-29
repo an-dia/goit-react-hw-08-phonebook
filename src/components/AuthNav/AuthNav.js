@@ -23,7 +23,7 @@ const AuthNav = () => (
       className={s.link}
       activeClassName={s.activeLink}
     >
-      Регистрация
+      Registration
     </NavLink>
     <NavLink
       to="/login"
@@ -31,7 +31,7 @@ const AuthNav = () => (
       className={s.link}
       activeClassName={s.activeLink}
     >
-      Логин
+      Log in
     </NavLink>
   </div>
 );
